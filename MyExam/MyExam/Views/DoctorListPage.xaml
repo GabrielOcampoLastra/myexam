@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:controls="clr-namespace:MyExam.Controls;assembly=MyExam"
+             xmlns:viewcells="clr-namespace:MyExam.Viewcells;assembly=MyExam"
+             xmlns:res="clr-namespace:MyExam.Resources;assembly=MyExam"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             Title="Lista doctores"
+             x:Class="MyExam.Views.DoctorListPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cerrar sesión" Order="Secondary" Command="{Binding LogoutCommand}"/>
+    </ContentPage.ToolbarItems>
+
+    <controls:LoadingHolderControlView IsBusy="{Binding IsBusy}">
+        <controls:LoadingHolderControlView.Content>
+            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <ListView CachingStrategy="RecycleElement" ItemsSource="{Binding UserList}" ItemTapped="DoctorListOnItemSelected"
+                          SeparatorVisibility="None" RowHeight="150" BackgroundColor="#F6F6F6" SelectedItem="{Binding SelectedUser, Mode=TwoWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <viewcells:UserCell/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </controls:LoadingHolderControlView.Content>
+    </controls:LoadingHolderControlView>
+
+</ContentPage>

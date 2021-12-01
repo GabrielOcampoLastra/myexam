@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:controls="clr-namespace:MyExam.Controls;assembly=MyExam"
+             xmlns:converters="clr-namespace:MyExam.Converters;assembly=MyExam"
+             xmlns:behaviors="clr-namespace:MyExam.Behaviors;assembly=MyExam"
+             xmlns:res="clr-namespace:MyExam.Resources;assembly=MyExam"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="MyExam.Views.LoginPage">
+    <controls:LoadingHolderControlView IsBusy="{Binding IsBusy}">
+        <controls:LoadingHolderControlView.Content>
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="70*"/>
+                </Grid.RowDefinitions>
+
+                <Image Grid.Row="0" Grid.RowSpan="2" Source="bg_login" Aspect="Fill"/>
+                <Label Grid.Row="0" Text="{x:Static res:AppResources.AppName}" Style="{StaticResource TitleStyle}"/>
+
+                <StackLayout Grid.Row="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="20,0" Spacing="30">
+
+                    <StackLayout>
+                        <controls:ImageEntry x:Name="EmailEntry" Text="{Binding Username}" Placeholder="{x:Static res:AppResources.Email}" 
+                                             Keyboard="Email" Image="icon_user" Style="{StaticResource LoginEntryStyle}" ImageHeight="22" ImageWidth="22">
+                            <Entry.Behaviors>
+                                <behaviors:EmailValidatorBehavior x:Name="EmailBehavior" />
+                                <behaviors:MaxLengthValidatorBehavior MaxLength="15"/>
+                            </Entry.Behaviors>
+                        </controls:ImageEntry>
+                        <Label Text="{x:Static res:AppResources.InvalidEmail}" Style="{StaticResource ErroMessageStyle}"
+                               IsVisible="{Binding Source={x:Reference EmailBehavior}, Path=IsValid, Converter={converters:BoolInversorConverter}}"/>
+                    </StackLayout>
+
+                    <controls:ImageEntry x:Name="PasswordEntry" Text="{Binding Password}" IsPassword="True" ImageHeight="22" ImageWidth="22"
+                                         Placeholder="{x:Static res:AppResources.Password}" Image="icon_lock" Style="{StaticResource LoginEntryStyle}">
+                        <Entry.Behaviors>
+                            <behaviors:MaxLengthValidatorBehavior MaxLength="15"/>
+                        </Entry.Behaviors>
+                    </controls:ImageEntry>
+
+                    <Frame IsVisible="{Binding ValidationErrors, Converter={converters:StringToBoolConverter}}">
+                        <StackLayout Padding="0">
+                            <Label x:Name="MessageLbl" Text="{Binding ValidationErrors}" Style="{StaticResource ErroMessageStyle}"/>
+                        </StackLayout>
+                    </Frame>
+
+                    <controls:CustomRoundedButton Text="{x:Static res:AppResources.Login}" HorizontalOptions="FillAndExpand" 
+                                                  HeightRequest="50" TextColor="#00DC45" BackgroundColor="White" Command="{Binding LoginCommand}"/>
+                </StackLayout>
+            </Grid>
+        </controls:LoadingHolderControlView.Content>
+    </controls:LoadingHolderControlView>
+</ContentPage>

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
+             x:Class="MyExam.Viewcells.UserCell">
+    <ViewCell.View>
+        <Grid Margin="15,10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="20*"/>
+            </Grid.ColumnDefinitions>
+
+            <controls:CircleImage Source="{Binding Picture.Large}" Aspect="AspectFill" 
+                                  WidthRequest="90" HeightRequest="90" Grid.Column="0"
+                                  VerticalOptions="Center" HorizontalOptions="Center"/>
+
+            <Grid Grid.Column="1" Padding="10" RowSpacing="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="40*"/>
+                </Grid.RowDefinitions>
+
+                <StackLayout Grid.Row="0" Orientation="Horizontal">
+                    <Label Text="{Binding Name.First}" VerticalTextAlignment="Center"/>
+                    <Label Text="{Binding Name.Last}" VerticalTextAlignment="Center"/>
+                </StackLayout>
+                <Label Grid.Row="1" Text="{Binding Email}" VerticalTextAlignment="Center" LineBreakMode="NoWrap"/>
+                <StackLayout Grid.Row="2" Orientation="Horizontal">
+                    <Image Source="icon_location"/>
+                    <Label Grid.Row="2" Text="{Binding Location.Street}" VerticalTextAlignment="Center"/>
+                </StackLayout>
+            </Grid>
+
+            <StackLayout Grid.Column="2" Orientation="Horizontal" Padding="5,10">
+                <Image Source="icon_star" HeightRequest="20" WidthRequest="20" VerticalOptions="Start"/>
+                <Label Text="{Binding Calification}"/>
+            </StackLayout>
+
+        </Grid>
+  </ViewCell.View>
+</ViewCell>
